@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Rastreo - Nuevo Vehículo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="sidebar">
+        <ul class="sidebar-menu">
+            <li>Inicio</li>
+            <li>Reportes</li>
+            <li>Monitoreo</li>
+            <li>Ingresar Personal</li>
+            <li>Ingresar Vehículo</li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="form-container">
+            <h2 class="form-title">Ingresar nuevo vehículo</h2>
+            <form id="vehicleForm">
+                <div class="form-group">
+                    <label for="patente">Patente:</label>
+                    <input type="text" id="patente" name="patente" required>
+                </div>
+                <div class="form-group">
+                    <label for="marca">Marca:</label>
+                    <input type="text" id="marca" name="marca" required>
+                </div>
+                <div class="form-group">
+                    <label for="modelo">Modelo:</label>
+                    <input type="text" id="modelo" name="modelo" required>
+                </div>
+                <button type="submit" class="save-button">Guardar Vehículo</button>
+            </form>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
