@@ -10,8 +10,8 @@ app.use(cors());
 app.use(express.json());
 
 // Configuración de Supabase
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_ANON_KEY;
+const supabaseUrl = 'https://zzrwbmjibthoglzdqsbt.supabase.co';
+const supabaseKey =  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp6cndibWppYnRob2dsemRxc2J0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE3OTg0OTcsImV4cCI6MjA0NzM3NDQ5N30.adTAcVy-63gaXhlFl3UkktOisTNHflnxP2x-Bczk_o8';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Rutas
