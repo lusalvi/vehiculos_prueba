@@ -11,7 +11,7 @@ app.use(express.json());
 
 // Configuración de Supabase desde variables de entorno
 const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_KEY; // Cambia SUPABASE_ANON_KEY por SUPABASE_KEY
+const supabaseKey = process.env.SUPABASE_KEY;
 
 if (!supabaseUrl || !supabaseKey) {
     console.error('Faltan variables de entorno para Supabase');
@@ -84,6 +84,37 @@ app.delete('/api/vehiculos/:patente', async (req, res) => {
         res.json({ mensaje: 'Vehículo eliminado exitosamente' });
     } catch (error) {
         res.status(500).json({ mensaje: 'Error al eliminar vehículo', error: error.message });
+    }
+});
+
+//Nueva ruta para actualizar vehículo por patente
+app.put('/api/vehiculos/:patente', async (req, res) => {
+    try {
+        const { patente } = req.params;
+        const { marca, modelo } = req.body;
+
+        // Verificar si la patente existe
+        const { data: existente } = await supabase
+            .from('vehiculos')
+            .select('patente')
+            .eq('patente', patente)
+            .single();
+
+        if (!existente) {
+            return res.status(404).json({ mensaje: 'Vehículo no encontrado' });
+        }
+
+        const { data, error } = await supabase
+            .from('vehiculos')
+            .update({ marca, modelo })
+            .eq('patente', patente)
+            .select()
+            .single();
+
+        if (error) throw error;
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ mensaje: 'Error al actualizar vehículo', error: error.message });
     }
 });
 
