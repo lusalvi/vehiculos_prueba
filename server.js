@@ -9,9 +9,15 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Configuración de Supabase
-const supabaseUrl = 'https://zzrwbmjibthoglzdqsbt.supabase.co';
-const supabaseKey =  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp6cndibWppYnRob2dsemRxc2J0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE3OTg0OTcsImV4cCI6MjA0NzM3NDQ5N30.adTAcVy-63gaXhlFl3UkktOisTNHflnxP2x-Bczk_o8';
+// Configuración de Supabase desde variables de entorno
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_KEY;
+
+if (!supabaseUrl || !supabaseKey) {
+    console.error('Faltan variables de entorno para Supabase');
+    process.exit(1);
+}
+
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Rutas
@@ -53,6 +59,24 @@ app.post('/api/vehiculos', async (req, res) => {
         res.status(201).json(data);
     } catch (error) {
         res.status(500).json({ mensaje: 'Error al guardar vehículo', error: error.message });
+    }
+});
+
+// Nueva ruta para eliminar vehículo por patente
+app.delete('/api/vehiculos/:patente', async (req, res) => {
+    try {
+        const { patente } = req.params;
+
+        const { error } = await supabase
+            .from('vehiculos')
+            .delete()
+            .eq('patente', patente);
+
+        if (error) throw error;
+
+        res.json({ mensaje: 'Vehículo eliminado exitosamente' });
+    } catch (error) {
+        res.status(500).json({ mensaje: 'Error al eliminar vehículo', error: error.message });
     }
 });
 
