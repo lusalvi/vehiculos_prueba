@@ -11,14 +11,14 @@ app.use(express.json());
 
 // Configuración de Supabase desde variables de entorno
 const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_KEY;
+const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
 
-if (!supabaseUrl || !supabaseKey) {
+if (!supabaseUrl || !supabaseAnonKey) {
     console.error('Faltan variables de entorno para Supabase');
     process.exit(1);
 }
 
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // Rutas
 app.get('/api/vehiculos', async (req, res) => {
